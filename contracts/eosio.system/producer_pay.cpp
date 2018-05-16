@@ -53,7 +53,7 @@ namespace eosiosystem {
    }
    
    eosio::asset system_contract::payment_per_vote( const account_name& owner, double owners_votes, const eosio::asset& pervote_bucket ) {
-      eosio::asset payment(0, S(4,EOS));
+      eosio::asset payment(0, S(4,SYS));
       const int64_t min_daily_amount = 100 * 10000;
       if ( pervote_bucket.amount < min_daily_amount ) {
          return payment;

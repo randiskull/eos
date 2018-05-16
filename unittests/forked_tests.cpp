@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE( forking ) try {
 
    auto cr = c.push_action( N(eosio.token), N(create), N(eosio.token), mutable_variant_object()
               ("issuer",       "eosio" )
-              ("maximum_supply", "10000000.0000 EOS")
+              ("maximum_supply", "10000000.0000 SYS")
               ("can_freeze", 0)
               ("can_recall", 0)
               ("can_whitelist", 0)
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE( forking ) try {
 
    cr = c.push_action( N(eosio.token), N(issue), N(eosio), mutable_variant_object()
               ("to",       "dan" )
-              ("quantity", "100.0000 EOS")
+              ("quantity", "100.0000 SYS")
               ("memo", "")
       );
 
