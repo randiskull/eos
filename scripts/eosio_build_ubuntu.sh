@@ -53,7 +53,7 @@
 		exit 1
 	fi
 
-	DEP_ARRAY=(clang-4.0 lldb-4.0 libclang-4.0-dev cmake make automake libbz2-dev libssl-dev \
+	DEP_ARRAY=(clang-6.0 lldb-6.0 libclang-6.0-dev cmake make automake libbz2-dev libssl-dev \
 	libgmp3-dev autotools-dev build-essential libicu-dev python2.7-dev python3-dev \
         autoconf libtool curl zlib1g-dev doxygen graphviz)
 	COUNT=1
@@ -88,8 +88,8 @@
 			case $yn in
 				[Yy]* ) 
 					printf "\\n\\n\\tInstalling dependencies\\n\\n"
-					sudo apt-get update
-					if ! sudo apt-get -y install ${DEP}
+					apt-get update
+					if ! apt-get -y install ${DEP}
 					then
 						printf "\\n\\tDPKG dependency failed.\\n"
 						printf "\\n\\tExiting now.\\n"
@@ -109,7 +109,7 @@
 	printf "\\n\\tChecking boost library installation.\\n"
 	BVERSION=$( grep BOOST_LIB_VERSION "${BOOST_ROOT}/include/boost/version.hpp" 2>/dev/null \
 	| tail -1 | tr -s ' ' | cut -d\  -f3 | sed 's/[^0-9\._]//gI')
-	if [ "${BVERSION}" != "1_66" ]; then
+	if [ "${BVERSION}" != "1_67" ]; then
 		printf "\\tRemoving existing boost libraries in %s/opt/boost* .\\n" "${HOME}"
 		if ! rm -rf "${HOME}/opt/boost*"
 		then
@@ -124,27 +124,27 @@
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		STATUS=$(curl -LO -w '%{http_code}' --connect-timeout 30 https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.tar.bz2)
+		STATUS=$(curl -LO -w '%{http_code}' --connect-timeout 30 https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.bz2)
 		if [ "${STATUS}" -ne 200 ]; then
 			printf "\\tUnable to download Boost libraries at this time.\\n"
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! tar xf "${TEMP_DIR}/boost_1_66_0.tar.bz2"
+		if ! tar xf "${TEMP_DIR}/boost_1_67_0.tar.bz2"
 		then
-			printf "\\n\\tUnable to unarchive file %s/boost_1_66_0.tar.bz2.\\n" "${TEMP_DIR}"
+			printf "\\n\\tUnable to unarchive file %s/boost_1_67_0.tar.bz2.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! rm -f "${TEMP_DIR}/boost_1_66_0.tar.bz2"
+		if ! rm -f "${TEMP_DIR}/boost_1_67_0.tar.bz2"
 		then
-			printf "\\n\\tUnable to remove file %s/boost_1_66_0.tar.bz2.\\n" "${TEMP_DIR}"
+			printf "\\n\\tUnable to remove file %s/boost_1_67_0.tar.bz2.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! cd "${TEMP_DIR}/boost_1_66_0/"
+		if ! cd "${TEMP_DIR}/boost_1_67_0/"
 		then
-			printf "\\n\\tUnable to enter directory %s/boost_1_66_0.\\n" "${TEMP_DIR}"
+			printf "\\n\\tUnable to enter directory %s/boost_1_67_0.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
@@ -160,47 +160,47 @@
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1
 		fi
-		if ! rm -rf "${TEMP_DIR}/boost_1_66_0"
+		if ! rm -rf "${TEMP_DIR}/boost_1_67_0"
 		then
-			printf "\\n\\tUnable to remove %s/boost_1_66_0.\\n" "${TEMP_DIR}"
+			printf "\\n\\tUnable to remove %s/boost_1_67_0.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1
 		fi
-		printf "\\tBoost 1.66.0 successfully installed @ %s/opt/boost_1_66_0.\\n" "${HOME}"
+		printf "\\tBoost 1.67.0 successfully installed @ %s/opt/boost_1_67_0.\\n" "${HOME}"
 	else
-		printf "\\tBoost 1.66.0 found at %s/opt/boost_1_66_0.\\n\\n" "${HOME}"
+		printf "\\tBoost 1.67.0 found at %s/opt/boost_1_67_0.\\n\\n" "${HOME}"
 	fi
 
 	printf "\\n\\tChecking MongoDB installation.\\n"
     if [ ! -e "${MONGOD_CONF}" ]; then
-		printf "\\n\\tInstalling MongoDB 3.6.3.\\n"
+		printf "\\n\\tInstalling MongoDB 3.6.4.\\n"
 		if ! cd "${HOME}/opt"
 		then
 			printf "\\n\\tUnable to enter directory %s/opt.\\n" "${HOME}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		STATUS=$(curl -LO -w '%{http_code}' --connect-timeout 30 https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.3.tgz)
+		STATUS=$(curl -LO -w '%{http_code}' --connect-timeout 30 https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.4.tgz)
 		if [ "${STATUS}" -ne 200 ]; then
 			printf "\\tUnable to download MongoDB at this time.\\n"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! tar xf "${HOME}/opt/mongodb-linux-x86_64-3.6.3.tgz"
+		if ! tar xf "${HOME}/opt/mongodb-linux-x86_64-3.6.4.tgz"
 		then
-			printf "\\tUnable to unarchive file %s/opt/mongodb-linux-x86_64-3.6.3.tgz.\\n" "${HOME}"
+			printf "\\tUnable to unarchive file %s/opt/mongodb-linux-x86_64-3.6.4.tgz.\\n" "${HOME}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! rm -f "${HOME}/opt/mongodb-linux-x86_64-3.6.3.tgz"
+		if ! rm -f "${HOME}/opt/mongodb-linux-x86_64-3.6.4.tgz"
 		then
-			printf "\\tUnable to remove file %s/opt/mongodb-linux-x86_64-3.6.3.tgz.\\n" "${HOME}"
+			printf "\\tUnable to remove file %s/opt/mongodb-linux-x86_64-3.6.4.tgz.\\n" "${HOME}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! ln -s "${HOME}/opt/mongodb-linux-x86_64-3.6.3/" "${HOME}/opt/mongodb"
+		if ! ln -s "${HOME}/opt/mongodb-linux-x86_64-3.6.4/" "${HOME}/opt/mongodb"
 		then
-			printf "\\tUnable to symbolic link %s/opt/mongodb-linux-x86_64-3.6.3/ to %s/opt/mongodb.\\n" "${HOME}" "${HOME}"
+			printf "\\tUnable to symbolic link %s/opt/mongodb-linux-x86_64-3.6.4/ to %s/opt/mongodb.\\n" "${HOME}" "${HOME}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
@@ -253,31 +253,31 @@ mongodconf
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		STATUS=$(curl -LO -w '%{http_code}' --connect-timeout 30 https://github.com/mongodb/mongo-c-driver/releases/download/1.9.3/mongo-c-driver-1.9.3.tar.gz)
+		STATUS=$(curl -LO -w '%{http_code}' --connect-timeout 30 https://github.com/mongodb/mongo-c-driver/releases/download/1.9.5/mongo-c-driver-1.9.5.tar.gz)
 		if [ "${STATUS}" -ne 200 ]; then
-			if ! rm -f "${TEMP_DIR}/mongo-c-driver-1.9.3.tar.gz"
+			if ! rm -f "${TEMP_DIR}/mongo-c-driver-1.9.5.tar.gz"
 			then
-				printf "\\n\\tUnable to remove file %s/mongo-c-driver-1.9.3.tar.gz.\\n" "${TEMP_DIR}"
+				printf "\\n\\tUnable to remove file %s/mongo-c-driver-1.9.5.tar.gz.\\n" "${TEMP_DIR}"
 			fi
 			printf "\\tUnable to download MongoDB C driver at this time.\\n"
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! tar xf "${TEMP_DIR}/mongo-c-driver-1.9.3.tar.gz"
+		if ! tar xf "${TEMP_DIR}/mongo-c-driver-1.9.5.tar.gz"
 		then
-			printf "\\n\\tUnable to unarchive file %s/mongo-c-driver-1.9.3.tar.gz.\\n" "${TEMP_DIR}"
+			printf "\\n\\tUnable to unarchive file %s/mongo-c-driver-1.9.5.tar.gz.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! rm -f "${TEMP_DIR}/mongo-c-driver-1.9.3.tar.gz"
+		if ! rm -f "${TEMP_DIR}/mongo-c-driver-1.9.5.tar.gz"
 		then
-			printf "\\n\\tUnable to remove file %s/mongo-c-driver-1.9.3.tar.gz.\\n" "${TEMP_DIR}"
+			printf "\\n\\tUnable to remove file %s/mongo-c-driver-1.9.5.tar.gz.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! cd "${TEMP_DIR}/mongo-c-driver-1.9.3"
+		if ! cd "${TEMP_DIR}/mongo-c-driver-1.9.5"
 		then
-			printf "\\n\\tUnable to enter directory %s/mongo-c-driver-1.9.3.\\n" "${TEMP_DIR}"
+			printf "\\n\\tUnable to enter directory %s/mongo-c-driver-1.9.5.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
@@ -293,7 +293,7 @@ mongodconf
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing MongoDB C driver.\\nMake sure you have sudo privileges.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -329,13 +329,13 @@ mongodconf
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make -j"${JOBS}"
+		if ! make -j"${JOBS}"
 		then
 			printf "\\tError compiling MongoDB C++ driver.\\n"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing MongoDB C++ driver.\\nMake sure you have sudo privileges.\\n"
 			printf "\\n\\tExiting now.\\n\\n"
@@ -347,7 +347,7 @@ mongodconf
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo rm -rf "${TEMP_DIR}/mongo-cxx-driver"
+		if ! rm -rf "${TEMP_DIR}/mongo-cxx-driver"
 		then
 			printf "\\n\\tUnable to remove directory %s/mongo-cxx-driver.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
@@ -398,7 +398,7 @@ mongodconf
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing secp256k1-zkp.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -449,7 +449,7 @@ mongodconf
 			printf "\\n\\tExiting now.\\n"
 			exit 1;
 		fi
-		if ! git clone --depth 1 --single-branch --branch release_40 https://github.com/llvm-mirror/clang.git
+		if ! git clone --depth 1 --single-branch --branch release_60 https://github.com/llvm-mirror/clang.git
 		then
 			printf "\\tUnable to clone clang repo @ https://github.com/llvm-mirror/clang.git.\\n"
 			printf "\\n\\tExiting now.\\n"

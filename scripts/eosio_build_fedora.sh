@@ -50,7 +50,7 @@
 	
 	printf "\tYum installation found at ${YUM}.\n"
 	printf "\tUpdating YUM.\n"
-	UPDATE=$( sudo yum -y update )
+	UPDATE=$( yum -y update )
 	
 	if [ $? -ne 0 ]; then
 		printf "\n\tYUM update failed.\n"
@@ -71,7 +71,7 @@
 
 	for (( i=0; i<${#DEP_ARRAY[@]}; i++ ));
 	do
-		pkg=$( sudo $YUM info ${DEP_ARRAY[$i]} 2>/dev/null | grep Repo | tr -s ' ' | cut -d: -f2 | sed 's/ //g' )
+		pkg=$( $YUM info ${DEP_ARRAY[$i]} 2>/dev/null | grep Repo | tr -s ' ' | cut -d: -f2 | sed 's/ //g' )
 
 		if [ "$pkg" != "@System" ]; then
 			DEP=$DEP" ${DEP_ARRAY[$i]} "
@@ -92,7 +92,7 @@
 			case $yn in
 				[Yy]* ) 
 					printf "\n\n\tInstalling dependencies\n\n"
-					sudo yum -y install "${DEP}"
+					yum -y install "${DEP}"
 					if [ $? -ne 0 ]; then
 						printf "\n\tYUM dependency installation failed.\n"
 						printf "\n\tExiting now.\n"
@@ -134,7 +134,7 @@
 				exit;
 			fi
 			cd lcov
-			sudo make install
+			make install
 			if [ $? -ne 0 ]; then
 				printf "\tUnable to install LCOV at this time.\n"
 				printf "\tExiting now.\n\n"
@@ -212,7 +212,7 @@
 			printf "\tExiting now.\n\n"
 			exit;
 		fi
-		sudo make install
+		make install
 		if [ $? -ne 0 ]; then
 			printf "\tError installing MongoDB C driver.\nMake sure you have sudo privileges.\n"
 			printf "\tExiting now.\n\n"
@@ -221,7 +221,7 @@
 		cd ..
 		rm -rf ${TEMP_DIR}/mongo-c-driver-1.9.3
 		cd ${TEMP_DIR}
-		sudo rm -rf ${TEMP_DIR}/mongo-cxx-driver
+		rm -rf ${TEMP_DIR}/mongo-cxx-driver
 		git clone https://github.com/mongodb/mongo-cxx-driver.git --branch releases/stable --depth 1
 		if [ $? -ne 0 ]; then
 			printf "\tUnable to clone MongoDB C++ driver at this time.\n"
@@ -235,20 +235,20 @@
 			printf "\tExiting now.\n\n"
 			exit;
 		fi
-		sudo make -j${JOBS}
+		make -j${JOBS}
 		if [ $? -ne 0 ]; then
 			printf "\tError compiling MongoDB C++ driver.\n"
 			printf "\tExiting now.\n\n"
 			exit;
 		fi
-		sudo make install
+		make install
 		if [ $? -ne 0 ]; then
 			printf "\tError installing MongoDB C++ driver.\nMake sure you have sudo privileges.\n"
 			printf "\tExiting now.\n\n"
 			exit;
 		fi
 		cd
-		sudo rm -rf ${TEMP_DIR}/mongo-cxx-driver
+		rm -rf ${TEMP_DIR}/mongo-cxx-driver
 	else
 		printf "\tMongo C++ driver found at /usr/local/lib/libmongocxx-static.a.\n"
 	fi
@@ -277,7 +277,7 @@
 			printf "\tExiting now.\n\n"
 			exit;
 		fi
-		sudo make -j${CPU_CORE} install
+		make -j${CPU_CORE} install
 		rm -rf cd ${TEMP_DIR}/secp256k1-zkp
 	else
 		printf "\tsecp256k1 found\n"

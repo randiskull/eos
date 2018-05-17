@@ -59,7 +59,7 @@
 			case $yn in
 				[Yy]* ) 
 					printf "\\n\\n\\tInstalling SCL.\\n\\n"
-					if ! sudo "${YUM}" -y --enablerepo=extras install centos-release-scl 2>/dev/null
+					if ! "${$YUM}" -y --enablerepo=extras install centos-release-scl 2>/dev/null
 					then
 						printf "\\n\\tCentos Software Collections Repository installation failed.\\n"
 						printf "\\n\\tExiting now.\\n\\n"
@@ -68,7 +68,7 @@
 						printf "\\n\\tCentos Software Collections Repository installed successfully.\\n"
 					fi
 					printf "\\n\\n\\tInstalling devtoolset-7.\\n\\n"
-					if ! sudo "${YUM}" install -y devtoolset-7 2>/dev/null
+					if ! "${$YUM}" install -y devtoolset-7 2>/dev/null
 					then
 						printf "\\n\\tCentos devtoolset-7 installation failed.\\n"
 						printf "\\n\\tExiting now.\\n\\n"
@@ -77,7 +77,7 @@
 						printf "\\n\\tCentos devtoolset installed successfully.\\n"
 					fi
 					printf "\\n\\n\\tInstalling Python3.\\n\\n"
-					if ! sudo "${YUM}" install -y python33.x86_64 2>/dev/null
+					if ! "${$YUM}" install -y python33.x86_64 2>/dev/null
 					then
 						printf "\\n\\tCentos Python3 installation failed.\\n"
 						printf "\\n\\tExiting now.\\n\\n"
@@ -116,7 +116,7 @@
 	
 	printf "\\n\\tUpdating YUM repository.\\n\\n"
 
-	if ! sudo "${YUM}" -y update 2>/dev/null
+	if ! "${$YUM}" -y update 2>/dev/null
 	then
 		printf "\\n\\tYUM update failed.\\n"
 		printf "\\n\\tExiting now.\\n\\n"
@@ -135,7 +135,7 @@
 
 	for (( i=0; i<${#DEP_ARRAY[@]}; i++ ));
 	do
-		pkg=$( sudo "${YUM}" info "${DEP_ARRAY[$i]}" 2>/dev/null | grep Repo | tr -s ' ' | cut -d: -f2 | sed 's/ //g' )
+		pkg=$( "${$YUM}" info "${DEP_ARRAY[$i]}" 2>/dev/null | grep Repo | tr -s ' ' | cut -d: -f2 | sed 's/ //g' )
 		if [ "$pkg" != "installed" ]; then
 			DEP=$DEP" ${DEP_ARRAY[$i]} "
 			DISPLAY="${DISPLAY}${COUNT}. ${DEP_ARRAY[$i]}\\n\\t"
@@ -155,7 +155,7 @@
 			case $yn in
 				[Yy]* ) 
 					printf "\\n\\n\\tInstalling dependencies\\n\\n"
-					if ! sudo "${YUM}" -y install ${DEP}
+					if ! "${$YUM}" -y install ${DEP}
 					then
 						printf "\\n\\tYUM dependency installation failed.\\n"
 						printf "\\n\\tExiting now.\\n\\n"
@@ -177,7 +177,7 @@
 		perl_bin=$( command -v perl 2>/dev/null )
 		if [ -z "${perl_bin}" ]; then
 			printf "\\n\\tInstalling perl.\\n"
-			if ! sudo "${YUM}" -y install perl
+			if ! "${$YUM}" -y install perl
 			then
 				printf "\\n\\tUnable to install perl at this time.\\n"
 				printf "\\n\\tExiting now.\\n\\n"
@@ -209,7 +209,7 @@
 				printf "\\tExiting now.\\n\\n"
 				exit 1;
 			fi
-			if ! sudo make install
+			if ! make install
 			then
 				printf "\\tUnable to install LCOV at this time.\\n"
 				printf "\\tExiting now.\\n\\n"
@@ -490,7 +490,7 @@ mongodconf
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing MongoDB C driver.\\nMake sure you have sudo privileges.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -527,13 +527,13 @@ mongodconf
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make -j"${JOBS}"
+		if ! make -j"${JOBS}"
 		then
 			printf "\\tError compiling MongoDB C++ driver.\\n"
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing MongoDB C++ driver.\\nMake sure you have sudo privileges.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -545,7 +545,7 @@ mongodconf
 			printf "\\n\\tExiting now.\\n"
 			exit 1;
 		fi
-		if ! sudo rm -rf "${TEMP_DIR}/mongo-cxx-driver"
+		if ! rm -rf "${TEMP_DIR}/mongo-cxx-driver"
 		then
 			printf "\\n\\tUnable to remove directory %s/mongo-cxx-driver.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n"
@@ -596,7 +596,7 @@ mongodconf
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing secp256k1-zkp.\\n"
 			printf "\\tExiting now.\\n\\n"

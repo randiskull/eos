@@ -142,7 +142,7 @@
 			case $yn in
 				[Yy]* ) 
 					if [ $PERMISSION_GETTEXT -eq 1 ]; then
-						sudo chown -R "$(whoami)" /usr/local/share
+						chown -R "$(whoami)" /usr/local/share
 					fi
 					"${XCODESELECT}" --install 2>/dev/null;
 					printf "\\tUpdating Home Brew.\\n"
@@ -197,13 +197,13 @@
 							fi
 						else
 							printf "\\tRemoving Boost Version %s.\\n" "${BVERSION}"
-							if ! sudo rm -rf "${BOOST_ROOT}/include/boost"
+							if ! rm -rf "${BOOST_ROOT}/include/boost"
 							then
 								printf "\\tUnable to remove boost libraries at this time. 1\\n"
 								printf "\\tExiting now.\\n\\n"
 								exit 1;
 							fi
-							if ! sudo rm -rf "${BOOST_ROOT}/lib/libboost*"
+							if ! rm -rf "${BOOST_ROOT}/lib/libboost*"
 							then
 								printf "\\tUnable to remove boost libraries at this time. 2\\n"
 								printf "\\tExiting now.\\n\\n"
@@ -307,7 +307,7 @@
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing MongoDB C driver.\\nMake sure you have sudo privileges.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -349,7 +349,7 @@
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing MongoDB C++ driver.\\nMake sure you have sudo privileges.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -411,7 +411,7 @@
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tInstalling secp256k1-zkp has returned the above error.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -492,13 +492,13 @@
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make -j"${CPU_CORE}" install
+		if ! make -j"${CPU_CORE}" install
 		then
 			printf "\\tCompiling LLVM/Clang with WASM support has exited with the error above.\\n"
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo rm -rf "${TEMP_DIR}/wasm-compiler"
+		if ! rm -rf "${TEMP_DIR}/wasm-compiler"
 		then
 			printf "\\tUnable to remove directory %s/wasm-compiler.\\n" "${TEMP_DIR}"
 			printf "\\tExiting now.\\n\\n"

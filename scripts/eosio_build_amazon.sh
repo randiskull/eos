@@ -45,7 +45,7 @@
 	
 	printf "\\tYum installation found at %s.\\n" "${YUM}"
 	printf "\\tUpdating YUM.\\n"
-	if ! UPDATE=$( sudo "$YUM" -y update )
+	if ! UPDATE=$( "$YUM" -y update )
 	then
 		printf "\\n\\tYUM update failed.\\n"
 		printf "\\n\\tExiting now.\\n"
@@ -64,7 +64,7 @@
 
 	for (( i=0; i<${#DEP_ARRAY[@]}; i++ ));
 	do
-		pkg=$( sudo "$YUM" info "${DEP_ARRAY[$i]}" 2>/dev/null | grep Repo | tr -s ' ' | cut -d: -f2 | sed 's/ //g' )
+		pkg=$( "$YUM" info "${DEP_ARRAY[$i]}" 2>/dev/null | grep Repo | tr -s ' ' | cut -d: -f2 | sed 's/ //g' )
 
 		if [ "$pkg" != "installed" ]; then
 			DEP=$DEP" ${DEP_ARRAY[$i]} "
@@ -85,7 +85,7 @@
 			case $yn in
 				[Yy]* ) 
 					printf "\\n\\n\\tInstalling dependencies.\\n\\n"
-					if ! sudo "${YUM}" -y install ${DEP}
+					if ! "${$YUM}" -y install ${DEP}
 					then
 						printf "\\n\\tYUM dependency installation failed.\\n"
 						printf "\\n\\tExiting now.\\n"
@@ -107,7 +107,7 @@
 		perl_bin=$( command -v perl 2>/dev/null )
 		if [ -z "${perl_bin}" ]; then
 			printf "\\n\\tInstalling perl.\\n"
-			if ! sudo "${YUM}" -y install perl
+			if ! "${$YUM}" -y install perl
 			then
 				printf "\\n\\tUnable to install perl at this time.\\n"
 				printf "\\n\\tExiting now.\\n\\n"
@@ -136,7 +136,7 @@
 				printf "\\n\\tUnable to enter %s/lcov. Exiting now.\\n" "${TEMP_DIR}"; 
 				exit 1;
 			fi
-			if ! sudo make install
+			if ! make install
 			then
 				printf "\\n\\tUnable to install LCOV at this time.\\n"
 				printf "\\tExiting now.\\n\\n"
@@ -400,7 +400,7 @@ fi
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing MongoDB C driver.\\nMake sure you have sudo privileges.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -437,13 +437,13 @@ fi
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make -j"${JOBS}"
+		if ! make -j"${JOBS}"
 		then
 			printf "\\tError compiling MongoDB C++ driver.\\n"
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing MongoDB C++ driver.\\nMake sure you have sudo privileges.\\n"
 			printf "\\tExiting now.\\n\\n"
@@ -455,7 +455,7 @@ fi
 			printf "\\n\\tExiting now.\\n"
 			exit 1;
 		fi
-		if ! sudo rm -rf "${TEMP_DIR}/mongo-cxx-driver"
+		if ! rm -rf "${TEMP_DIR}/mongo-cxx-driver"
 		then
 			printf "\\n\\tUnable to remove directory %s/mongo-cxx-driver.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n"
@@ -506,7 +506,7 @@ fi
 			printf "\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! sudo make install
+		if ! make install
 		then
 			printf "\\tError installing secp256k1-zkp.\\n"
 			printf "\\tExiting now.\\n\\n"

@@ -155,8 +155,8 @@
 			;;
 			"elementary OS")
 				FILE="${PWD}/scripts/eosio_build_ubuntu.sh"
-				CXX_COMPILER=clang++-4.0
-				C_COMPILER=clang-4.0
+				CXX_COMPILER=clang++-6.0
+				C_COMPILER=clang-6.0
 				MONGOD_CONF=${HOME}/opt/mongodb/mongod.conf
 				export PATH=${HOME}/opt/mongodb/bin:$PATH
 			;;
@@ -169,15 +169,15 @@
 			;;
 			"Linux Mint")
 				FILE="${PWD}/scripts/eosio_build_ubuntu.sh"
-				CXX_COMPILER=clang++-4.0
-				C_COMPILER=clang-4.0
+				CXX_COMPILER=clang++-6.0
+				C_COMPILER=clang-6.0
 				MONGOD_CONF=${HOME}/opt/mongodb/mongod.conf
 				export PATH=${HOME}/opt/mongodb/bin:$PATH
 			;;
 			"Ubuntu")
 				FILE="${PWD}/scripts/eosio_build_ubuntu.sh"
-				CXX_COMPILER=clang++-4.0
-				C_COMPILER=clang-4.0
+				CXX_COMPILER=clang++-6.0
+				C_COMPILER=clang-6.0
 				MONGOD_CONF=${HOME}/opt/mongodb/mongod.conf
 				export PATH=${HOME}/opt/mongodb/bin:$PATH
 			;;
@@ -186,7 +186,7 @@
 				exit 1
 		esac
 
-		export BOOST_ROOT="${HOME}/opt/boost_1_66_0"
+		export BOOST_ROOT="${HOME}/opt/boost_1_67_0"
 		OPENSSL_ROOT_DIR=/usr/include/openssl
 		WASM_ROOT="${HOME}/opt/wasm"
 	fi
