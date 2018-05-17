@@ -305,9 +305,9 @@ mongodconf
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
-		if ! rm -rf "${TEMP_DIR}/mongo-c-driver-1.9.3"
+		if ! rm -rf "${TEMP_DIR}/mongo-c-driver-1.9.5"
 		then
-			printf "\\n\\tUnable to remove directory %s/mongo-c-driver-1.9.3.\\n" "${TEMP_DIR}"
+			printf "\\n\\tUnable to remove directory %s/mongo-c-driver-1.9.5.\\n" "${TEMP_DIR}"
 			printf "\\n\\tExiting now.\\n\\n"
 			exit 1;
 		fi
@@ -437,7 +437,7 @@ mongodconf
 			printf "\\n\\tExiting now.\\n"
 			exit 1;
 		fi
-		if ! git clone --depth 1 --single-branch --branch release_40 https://github.com/llvm-mirror/llvm.git
+		if ! git clone --depth 1 --single-branch --branch release_60 https://github.com/llvm-mirror/llvm.git
 		then
 			printf "\\tUnable to clone llvm repo @ https://github.com/llvm-mirror/llvm.git.\\n"
 			printf "\\n\\tExiting now.\\n"
